@@ -1,0 +1,9 @@
+server {
+	listen 8080;
+	server_name flask.app.com;
+	
+	location / {
+		include proxy_params;
+		proxy_pass http://localhost:5000;
+}
+}

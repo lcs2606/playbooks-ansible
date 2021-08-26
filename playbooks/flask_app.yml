@@ -1,0 +1,45 @@
+---
+- hosts: servers
+  become: yes
+  tasks:
+    
+    - name: Instalar nginx
+      apt: name=nginx state=present 
+
+    - name: Instalar pacotes flask
+      pip:
+        name:
+         - flask
+         - gunicorn
+
+    - name: Copiar arquivos do app
+      copy:
+        src: app
+        dest: /var/www/
+        owner: vagrant
+        group: vagrant
+        mode: 0644
+        backup: yes
+      notify: Restart Flask
+
+    - name: Copia serviço Flask
+      template:
+        src: templates/flask.j2
+        dest: /etc/systemd/system/flask.service
+
+    - name: Inicia serviço Flask
+      service: name=flask state=started
+
+    - name: Copia conf do app nginx
+      template:
+        src: templates/app.j2
+        dest: /etc/nginx/sites-enabled/app
+      notify:
+        - Restart Nginx  
+
+  handlers:
+    - name: Restart Flask
+      service: name=flask state=restarted
+
+    - name: Restart Nginx
+      service: name=nginx state=restarted

@@ -1,0 +1,22 @@
+---
+- hosts: servers
+  become: yes
+  tasks:
+    
+    - name: Instalar nginx
+      apt: name=nginx state=present update_cache=yes
+
+    - name: Instalar flask
+      pip:
+        name: flask
+
+    - name: Copiar arquivos do app
+      copy:
+        src: app
+        dest: /var/www/
+        owner: vagrant
+        group: vagrant
+        mode: 0644
+
+
+

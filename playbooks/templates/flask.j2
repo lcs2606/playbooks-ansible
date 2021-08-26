@@ -1,0 +1,13 @@
+[Unit]
+Description=flask
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=vagrant
+ExecStart=gunicorn app:app --bind 0.0.0.0:5000 --chdir /var/www/app
+
+[Install]
+WantedBy=multi-user.target
