@@ -5,10 +5,13 @@
     pip_modules:
       - flask
       - gunicorn
+    pacotes:
+      - nginx
+      - pip
   tasks:
     
-    - name: Instalar nginx
-      apt: name=nginx state=present 
+    - name: Instalar pacotes
+      apt: name="{{ pacotes }}" state=present update_cache=yes
 
     - name: Instalar pacotes flask
       pip:
