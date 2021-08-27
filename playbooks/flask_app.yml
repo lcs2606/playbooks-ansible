@@ -38,8 +38,8 @@
 
     - name: Copia conf do app nginx
       template:
-        src: templates/app.j2
-        dest: /etc/nginx/sites-enabled/app
+        src: templates/default.j2
+        dest: /etc/nginx/sites-enabled/default
       notify:
         - Restart Nginx  
 
