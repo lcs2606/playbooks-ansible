@@ -1,6 +1,10 @@
 ---
 - hosts: servers
   become: yes
+  vars:
+    pip_modules:
+      - flask
+      - gunicorn
   tasks:
     
     - name: Instalar nginx
@@ -8,9 +12,8 @@
 
     - name: Instalar pacotes flask
       pip:
-        name:
-         - flask
-         - gunicorn
+        name: "{{ item }}"
+      loop: "{{ pip_modules }}"
 
     - name: Copiar arquivos do app
       copy:
