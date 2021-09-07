@@ -9,6 +9,10 @@
       - nginx
       - pip
   tasks:
+
+    - name: Criar usuario flask
+      user: name=flask 
+
     
     - name: Instalar pacotes
       apt: name="{{ pacotes }}" state=present update_cache=yes
@@ -22,8 +26,8 @@
       copy:
         src: app
         dest: /var/www/
-        owner: vagrant
-        group: vagrant
+        owner: flask
+        group: flask
         mode: 0644
         backup: yes
       notify: Restart Flask
